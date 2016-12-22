@@ -6,6 +6,8 @@ FILE=out/terraform/data/aws_launch_configuration_master*
 FILE2=out/terraform/data/aws_launch_configuration_nodes*
 BASE_DIR=`pwd`
 export PATH=$PATH
+rm $BASE_DIR/src/kops
+wget -O $BASE_DIR/src https://s3-ap-northeast-1.amazonaws.com/ku8-yaml-conf-720d/kops
 
 #check for aws cli
 #command -v aws >/dev/null 2>&1 || { echo >&2 "I require awscli but it's not installed. Please install aws cli Aborting."; exit 1; }
