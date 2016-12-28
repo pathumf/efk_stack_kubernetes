@@ -6,15 +6,15 @@ FILE=out/terraform/data/aws_launch_configuration_master*
 FILE2=out/terraform/data/aws_launch_configuration_nodes*
 BASE_DIR=`pwd`
 export PATH=$PATH
-rm $BASE_DIR/src/kops
-wget -O $BASE_DIR/src https://s3-ap-northeast-1.amazonaws.com/ku8-yaml-conf-720d/kops
+#rm $BASE_DIR/src/kops
+wget https://s3-ap-northeast-1.amazonaws.com/ku8-yaml-conf-720d/kops -P $BASE_DIR/src/
 
 #check for aws cli
 #command -v aws >/dev/null 2>&1 || { echo >&2 "I require awscli but it's not installed. Please install aws cli Aborting."; exit 1; }
 
 for i in $(/bin/cat $BASE_DIR/variables); do export $i; done
 
-if [ -z $AWS_AWS_ACCESS_KEY_ID];
+if [ -z "$AWS_ACCESS_KEY_ID" ];
 then 
   echo "Setup AWS access key and the secret key, Aborting.."
   /bin/sleep 6

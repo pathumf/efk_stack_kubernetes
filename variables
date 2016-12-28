@@ -1,11 +1,11 @@
-CLUSTER_NAME=cloud-test.dev-bite.io
+CLUSTER_NAME=cloud-test-dev.prsn.us
 ZONES=ap-northeast-1a,ap-northeast-1c
 REGION=ap-northeast-1
 S3_BUCKET_NAME=test-kops
 STATE=s3://test-kops/
-NODE_COUNT=5
+NODE_COUNT=3
 NODE_SIZE=t2.large
 MASTER_SIZE=t2.large
-DNS_ZONE=cloud-test.dev-bite.io
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
+DNS_ZONE=cloud-test-dev.prsn.us
+AWS_ACCESS_KEY_ID=AKIAILIEYTURCH3IYDGQ
+AWS_SECRET_ACCESS_KEY=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
