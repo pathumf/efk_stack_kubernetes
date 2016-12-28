@@ -35,6 +35,7 @@ else
     aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $REGION >> /dev/null
 fi
 rm -rf $BASE_DIR/out/terraform/data/
+mkdir $BASE_DIR/src
 chmod 777 $BASE_DIR/src/kops
 
 $BASE_DIR/src/kops create cluster \
