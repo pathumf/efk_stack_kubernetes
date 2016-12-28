@@ -41,7 +41,8 @@ $BASE_DIR/src/kops create cluster \
 	--state=$STATE \
         --zones=$ZONES \
         --node-count=$NODE_COUNT \
-        --node-size=$NODE_SIZE \
+        --node-size=$NODE_SIZE \ 
+        --dns-zone=$DNS_ZONE \ 
         --master-size=$MASTER_SIZE \
         --target=$TARGET 
 
