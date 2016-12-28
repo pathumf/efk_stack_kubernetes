@@ -9,7 +9,7 @@ export PATH=$PATH
 KOPS=`ls $BASE_DIR/src/`
 if [ -z "$KOPS" ];
 then
-  wget https://s3-ap-northeast-1.amazonaws.com/ku8-yaml-conf-720d/kops -P $BASE_DIR/src/ 
+  wget https://s3-ap-northeast-1.amazonaws.com/ku8-yaml-conf-720d/kops -P $BASE_DIR/src/
 else
   echo "KOPS Already in src folder"
 fi
@@ -20,7 +20,7 @@ fi
 for i in $(/bin/cat $BASE_DIR/variables); do export $i; done
 
 if [ -z "$AWS_ACCESS_KEY_ID" ];
-then 
+then
   echo "Setup AWS access key and the secret key, Aborting.."
   /bin/sleep 6
   exit 1
@@ -30,23 +30,28 @@ if [ -z "`command -v aws`" ];
 then
   echo "Please install aws cli and re run the script, Aborting"
   /bin/sleep 6
-  exit 1 
+  exit 1
 else
     aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $REGION >> /dev/null
 fi
+rm -rf $BASE_DIR/out/terraform/data/
 chmod 777 $BASE_DIR/src/kops
 
 $BASE_DIR/src/kops create cluster \
-	--name=$CLUSTER_NAME \
-	--state=$STATE \
-        --zones=$ZONES \
-        --node-count=$NODE_COUNT \
-        --node-size=$NODE_SIZE \ 
-        --dns-zone=$DNS_ZONE \ 
-        --master-size=$MASTER_SIZE \
-        --target=$TARGET 
+                --name=$CLUSTER_NAME \
+                --state=$STATE \
+                --zones=$ZONES \
+                --node-count=$NODE_COUNT \
+                --node-size=$NODE_SIZE \
+                --dns-zone=$DNS_ZONE \
+                --master-size=$MASTER_SIZE \
+                --target=$TARGET
+if [ $? -ne 0 ];
+then
+exit 1
+fi
 
-/bin/sleep 6 
+/bin/sleep 6
 OUTPUT=`grep -Fi "logging_stack.sh" $FILE`
 
 if ([ -f $FILE ] && [ -z "$OUTPUT" ]);
@@ -56,8 +61,8 @@ then
   echo "bash logging_stack.sh" >> $FILE
   echo "sudo su -c  \"echo 262144 > /proc/sys/vm/max_map_count\"" >> $FILE
   echo "sudo su -c  \"echo 262144 > /proc/sys/vm/max_map_count\"" >> $FILE2
-else 
-  echo "configuration files already added to launch config"
+else
+  echo "configuration files are exsist"
 fi
 
 if [ -f $OUTPUT_PATH/kubernetes.tf ];
@@ -71,7 +76,7 @@ then
     echo "running kops"
     kops delete cluster $CLUSTER_NAME --yes --state=$STATE
    fi
-  else 
+  else
    echo "applying terraform"
    cd $BASE_DIR/out/terraform
    terraform $1
