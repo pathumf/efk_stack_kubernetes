@@ -6,6 +6,7 @@ FILE=out/terraform/data/aws_launch_configuration_master*
 FILE2=out/terraform/data/aws_launch_configuration_nodes*
 BASE_DIR=`pwd`
 export PATH=$PATH
+mkdir -p $BASE_DIR/src
 KOPS=`ls $BASE_DIR/src/`
 if [ -z "$KOPS" ];
 then
@@ -34,8 +35,7 @@ then
 else
     aws s3api create-bucket --bucket $S3_BUCKET_NAME --region $REGION >> /dev/null
 fi
-rm -rf $BASE_DIR/out/terraform/data/
-mkdir $BASE_DIR/src
+rm -rf $BASE_DIR/out/terraform/data
 chmod 777 $BASE_DIR/src/kops
 
 $BASE_DIR/src/kops create cluster \
